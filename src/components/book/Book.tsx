@@ -81,6 +81,7 @@ function PhysicalBook({ currentPage, turn, prefersReducedMotion }: { currentPage
   return <div className="book-object" aria-live="polite">
     <div className="book-page-stack book-page-stack-left" />
     <div className="book-page-stack book-page-stack-right" />
+    <div className="book-size-anchor" aria-hidden="true"><ChapterSpread index={currentPage} hidden /></div>
     <div className="book-underlay book-layer">
       <ChapterSpread index={turn?.to ?? currentPage} hidden={Boolean(turn)} />
     </div>

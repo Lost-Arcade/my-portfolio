@@ -43,6 +43,7 @@
   .book-spread { position: relative; transform-style: preserve-3d; }
   .book-object { position: relative; min-height: 690px; isolation: isolate; perspective: 1900px; transform-style: preserve-3d; filter: drop-shadow(0 25px 30px rgba(48,38,30,0.16)); }
   .book-layer { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .book-size-anchor { position: relative; z-index: -1; visibility: hidden; pointer-events: none; }
   .book-chapter-surface { position: relative; height: 100%; width: 100%; transform-style: preserve-3d; }
   .book-chapter-surface > .journal-grid { min-height: 690px; height: 100%; box-shadow: none; }
   .book-underlay { z-index: 1; }
