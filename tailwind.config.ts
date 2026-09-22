@@ -19,6 +19,11 @@ export default {
     },
     extend: {
       colors: {
+        espresso: "rgb(44 36 29 / <alpha-value>)",
+        paper: "rgb(243 235 221 / <alpha-value>)",
+        cream: "rgb(248 241 228 / <alpha-value>)",
+        olive: "rgb(104 112 90 / <alpha-value>)",
+        "olive-light": "rgb(169 175 148 / <alpha-value>)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

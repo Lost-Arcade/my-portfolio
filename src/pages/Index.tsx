@@ -1,18 +1,14 @@
-// Update this page (the content is just a fallback if you fail to update the page)
-
-import { MadeWithDyad } from "@/components/made-with-dyad";
+import { Book } from "@/components/book/Book";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">
-          Start building your amazing project here!
-        </p>
+    <main className="min-h-screen px-3 py-3 sm:px-6 sm:py-7 lg:px-10">
+      <div className="mx-auto mb-4 flex max-w-[1100px] items-center justify-between px-1 font-mono text-[9px] uppercase tracking-[0.18em] text-espresso/40 sm:px-2">
+        <span>AS / ENGINEERING JOURNAL</span>
+        <span>ISSUE 01 · 2026</span>
       </div>
-      <MadeWithDyad />
-    </div>
+      <Book />
+    </main>
   );
 };
 
