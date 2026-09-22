@@ -10,9 +10,11 @@ interface BookNavigationProps {
   onNavigate: (page: number) => void;
   onPrevious: () => void;
   onNext: () => void;
+  previousDisabled?: boolean;
+  nextDisabled?: boolean;
 }
 
-export function BookNavigation({ chapters, currentPage, isOpen, onToggle, onNavigate, onPrevious, onNext }: BookNavigationProps) {
+export function BookNavigation({ chapters, currentPage, isOpen, onToggle, onNavigate, onPrevious, onNext, previousDisabled, nextDisabled }: BookNavigationProps) {
   return (
     <>
       <aside className="fixed right-0 top-1/2 z-40 -translate-y-1/2">
@@ -58,11 +60,11 @@ export function BookNavigation({ chapters, currentPage, isOpen, onToggle, onNavi
         </AnimatePresence>
       </aside>
       <div className="mt-8 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-cream/70">
-        <button type="button" onClick={onPrevious} disabled={currentPage === 0} className="page-control" aria-label="Previous chapter">
+        <button type="button" onClick={onPrevious} disabled={previousDisabled ?? currentPage === 0} className="page-control" aria-label="Previous chapter">
           <ChevronLeft size={14} /> Previous
         </button>
         <span className="whitespace-nowrap">{String(currentPage + 1).padStart(2, "0")} / {String(chapters.length).padStart(2, "0")}</span>
-        <button type="button" onClick={onNext} disabled={currentPage === chapters.length - 1} className="page-control" aria-label="Next chapter">
+        <button type="button" onClick={onNext} disabled={nextDisabled ?? currentPage === chapters.length - 1} className="page-control" aria-label="Next chapter">
           Next <ChevronRight size={14} />
         </button>
       </div>
