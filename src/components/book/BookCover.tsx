@@ -25,21 +25,21 @@ export function BookCover({ onOpen, opening = false }: BookCoverProps) {
       transition={{ duration: opening ? 0.52 : 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{ transformOrigin: "left center", perspective: 1200 }}
     >
-      <div className="absolute inset-5 border border-cream/20" />
-      <div className="absolute inset-8 border border-cream/10" />
+      <div className="absolute inset-5 border border-olive-light/45" />
+      <div className="absolute inset-8 border border-olive-light/20" />
       <div className="cover-corner cover-corner-tl" />
       <div className="cover-corner cover-corner-br" />
-      <motion.div className="relative z-10 mx-auto w-full max-w-2xl text-center text-cream" variants={sequence} initial="hidden" animate={opening ? "hidden" : "visible"}>
+      <motion.div className="relative z-10 mx-auto w-full max-w-[760px] px-6 text-center text-cream" variants={sequence} initial="hidden" animate={opening ? "hidden" : "visible"}>
         <motion.p variants={reveal} className="eyebrow tracking-[0.34em] text-cream/65">FIELD NOTES / VOL. 01</motion.p>
         <motion.div variants={reveal} className="mx-auto mt-10 flex w-fit items-center gap-3 text-cream/50">
           <Minus size={12} strokeWidth={1} />
           <span className="font-mono text-[10px] tracking-[0.4em]">ENGINEERING JOURNAL</span>
           <Plus size={12} strokeWidth={1} />
         </motion.div>
-        <h1 className="mt-8 font-display text-[clamp(4.5rem,12vw,9.5rem)] leading-[0.76] tracking-[-0.07em]">
-          <motion.span variants={reveal} className="block">THE</motion.span>
-          <motion.span variants={reveal} className="block">ENGINEERING</motion.span>
-          <motion.span variants={reveal} className="block">JOURNAL</motion.span>
+        <h1 className="mt-8 text-center font-display leading-[0.82] tracking-[-0.05em]">
+          <motion.span variants={reveal} className="block text-[clamp(3.4rem,9vw,8rem)]">THE</motion.span>
+          <motion.span variants={reveal} className="block whitespace-nowrap text-[clamp(2.45rem,7.4vw,6.6rem)]">ENGINEERING</motion.span>
+          <motion.span variants={reveal} className="block text-[clamp(3.4rem,9vw,8rem)]">JOURNAL</motion.span>
         </h1>
         <motion.div variants={reveal} className="mx-auto my-12 h-px w-24 bg-olive-light/70" />
         <motion.p variants={reveal} className="font-mono text-xs uppercase tracking-[0.32em] text-cream/70">Arpit Singh</motion.p>

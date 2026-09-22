@@ -68,8 +68,8 @@ export function Book() {
     <motion.main id="journal" className="relative mx-auto w-full max-w-[1180px] pb-10">
       <header className="mb-6 flex items-center justify-between px-2 sm:px-4">
         <button type="button" onClick={() => { setOpened(false); setCurrentPage(0); setTurn(null); }} className="book-header-link"><ArrowLeft size={14} /> Cover</button>
-        <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-espresso/45"><Feather size={13} className="text-olive" /> Arpit's Fieldnotes</div>
-        <span className="hidden font-mono text-[9px] uppercase tracking-[0.18em] text-espresso/40 sm:block">Use ← → to turn</span>
+        <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-cream/75"><Feather size={13} className="text-olive" /> Arpit's Fieldnotes</div>
+        <span className="hidden font-mono text-[9px] uppercase tracking-[0.18em] text-cream/65 sm:block">Use ← → to turn</span>
       </header>
       <PhysicalBook currentPage={currentPage} turn={turn} prefersReducedMotion={Boolean(prefersReducedMotion)} />
       <BookNavigation chapters={chapters} currentPage={currentPage} isOpen={navigationOpen} onToggle={() => setNavigationOpen((value) => !value)} onNavigate={navigate} onPrevious={previous} onNext={next} />
@@ -81,9 +81,8 @@ function PhysicalBook({ currentPage, turn, prefersReducedMotion }: { currentPage
   return <div className="book-object" aria-live="polite">
     <div className="book-page-stack book-page-stack-left" />
     <div className="book-page-stack book-page-stack-right" />
-    <div className="book-size-anchor" aria-hidden="true"><ChapterSpread index={currentPage} hidden /></div>
     <div className="book-underlay book-layer">
-      <ChapterSpread index={turn?.to ?? currentPage} hidden={Boolean(turn)} />
+      <ChapterSpread index={turn?.to ?? currentPage} hidden={!turn} />
     </div>
     {turn ? <>
       <div className={`book-half-window book-current-half ${turn.direction === 1 ? "book-current-half-left" : "book-current-half-right"}`}>

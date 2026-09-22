@@ -57,7 +57,7 @@ export function BookNavigation({ chapters, currentPage, isOpen, onToggle, onNavi
           )}
         </AnimatePresence>
       </aside>
-      <div className="mt-8 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-espresso/50">
+      <div className="mt-8 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-cream/70">
         <button type="button" onClick={onPrevious} disabled={currentPage === 0} className="page-control" aria-label="Previous chapter">
           <ChevronLeft size={14} /> Previous
         </button>
