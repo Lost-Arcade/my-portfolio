@@ -65,23 +65,25 @@ export function Book() {
     }, blankDuration);
   }, [prefersReducedMotion]);
 
+  const finishTurn = useCallback(() => {
+    if (!turningPage) return;
+    const { to, direction } = turningPage;
+    setCurrentSpread(to);
+    setDisplayedSpread(to);
+    setTurningPage(null);
+    setPagePhase("blank");
+    beginWriting(direction === 1);
+  }, [beginWriting, turningPage]);
+
   const navigate = useCallback((page: number) => {
     const locked = pagePhase === "turning" || pagePhase === "blank" || pagePhase === "writing";
     if (mode !== "reading" || page === currentSpread || turningPage || closingCover || locked) return;
     const direction: 1 | -1 = page > currentSpread ? 1 : -1;
-    const turnDuration = prefersReducedMotion ? 180 : TURN_DURATION;
     setNavigationOpen(false);
     setWriteOnReveal(direction === 1);
     setPagePhase("turning");
     setTurningPage({ from: displayedSpread, to: page, direction });
-    window.setTimeout(() => {
-      setCurrentSpread(page);
-      setDisplayedSpread(page);
-      setTurningPage(null);
-      setPagePhase("blank");
-      beginWriting(direction === 1);
-    }, turnDuration);
-  }, [beginWriting, closingCover, currentSpread, displayedSpread, mode, pagePhase, prefersReducedMotion, turningPage]);
+  }, [closingCover, currentSpread, displayedSpread, mode, pagePhase, turningPage]);
 
   const next = useCallback(() => {
     if (currentSpread < chapters.length - 1) navigate(currentSpread + 1);
@@ -101,21 +103,22 @@ export function Book() {
     }, prefersReducedMotion ? 80 : 520);
   };
 
+  const finishClosingTurn = useCallback(() => {
+    if (!closingTurn || !turningPage) return;
+    setTurningPage(null);
+    setClosingTurn(false);
+    setMode("closing");
+    setPagePhase("complete");
+  }, [closingTurn, turningPage]);
+
   const openClosingPage = useCallback(() => {
     const locked = pagePhase === "turning" || pagePhase === "blank" || pagePhase === "writing";
     if (mode !== "reading" || currentSpread !== chapters.length - 1 || locked || turningPage) return;
-    const turnDuration = prefersReducedMotion ? 180 : TURN_DURATION;
     setNavigationOpen(false);
     setClosingTurn(true);
     setPagePhase("turning");
     setTurningPage({ from: displayedSpread, to: displayedSpread, direction: 1 });
-    window.setTimeout(() => {
-      setTurningPage(null);
-      setClosingTurn(false);
-      setMode("closing");
-      setPagePhase("complete");
-    }, turnDuration);
-  }, [currentSpread, displayedSpread, mode, pagePhase, prefersReducedMotion, turningPage]);
+  }, [currentSpread, displayedSpread, mode, pagePhase, turningPage]);
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
@@ -139,16 +142,16 @@ export function Book() {
         <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-cream/75"><Feather size={13} className="text-olive" /> Arpit's Fieldnotes</div>
         <span className="hidden font-mono text-[9px] uppercase tracking-[0.18em] text-cream/65 sm:block">Use ← → to turn</span>
       </header>
-      <PhysicalBook currentSpread={currentSpread} displayedSpread={displayedSpread} turningPage={turningPage} closingTurn={closingTurn} pagePhase={pagePhase} writeOnReveal={writeOnReveal} prefersReducedMotion={Boolean(prefersReducedMotion)} />
+      <PhysicalBook currentSpread={currentSpread} displayedSpread={displayedSpread} turningPage={turningPage} closingTurn={closingTurn} pagePhase={pagePhase} writeOnReveal={writeOnReveal} onTurnComplete={closingTurn ? finishClosingTurn : finishTurn} prefersReducedMotion={Boolean(prefersReducedMotion)} />
       <BookNavigation chapters={chapters} currentPage={currentSpread} isOpen={navigationOpen} onToggle={() => setNavigationOpen((value) => !value)} onNavigate={navigate} onPrevious={previous} onNext={currentSpread === chapters.length - 1 ? openClosingPage : next} nextDisabled={false} />
     </motion.main>
   </MotionConfig>;
 }
 
-function PhysicalBook({ currentSpread, displayedSpread, turningPage, closingTurn, pagePhase, writeOnReveal, prefersReducedMotion }: { currentSpread: number; displayedSpread: number; turningPage: TurnState | null; closingTurn: boolean; pagePhase: PagePhase; writeOnReveal: boolean; prefersReducedMotion: boolean }) {
+function PhysicalBook({ currentSpread, displayedSpread, turningPage, closingTurn, pagePhase, writeOnReveal, onTurnComplete, prefersReducedMotion }: { currentSpread: number; displayedSpread: number; turningPage: TurnState | null; closingTurn: boolean; pagePhase: PagePhase; writeOnReveal: boolean; onTurnComplete: () => void; prefersReducedMotion: boolean }) {
   const forwardRemaining = chapters.length - currentSpread - 1;
   const backwardRemaining = currentSpread + 1;
-  const destinationHidden = Boolean(turningPage) || pagePhase === "blank" || pagePhase === "turning";
+  const destinationHidden = pagePhase === "blank";
 
   return <div className="book-object" aria-live="polite">
     <PageStack side="left" remaining={backwardRemaining} />
@@ -170,6 +173,7 @@ function PhysicalBook({ currentSpread, displayedSpread, turningPage, closingTurn
             : ["10px 0 18px rgba(23, 20, 17, 0.12)", "30px 2px 35px rgba(23, 20, 17, 0.34)", "-8px 0 16px rgba(23, 20, 17, 0.14)"],
         }}
         transition={{ duration: prefersReducedMotion ? 0.18 : TURN_DURATION / 1000, ease: [0.22, 1, 0.36, 1], boxShadow: { duration: prefersReducedMotion ? 0.18 : TURN_DURATION / 1000 } }}
+        onAnimationComplete={onTurnComplete}
         style={{ transformStyle: "preserve-3d" }}
       >
         <div className="turning-page-face turning-page-front"><ChapterSpread index={turningPage.from} side={turningPage.direction === 1 ? "right" : "left"} /></div>

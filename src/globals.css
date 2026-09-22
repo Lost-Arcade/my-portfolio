@@ -70,20 +70,20 @@
   .book-page-stack-left { left: 0; }
   .book-page-stack-right { right: 0; }
   .book-page-stack-layer { position: absolute; top: 0; bottom: 0; width: 100%; border: 1px solid rgba(142,94,61,0.22); background: var(--page-edge); box-shadow: 0 1px 0 rgba(255,255,255,0.55) inset; }
-  .book-page-stack-left .book-page-stack-layer { right: 0; border-radius: 2px 0 0 2px; }
-  .book-page-stack-right .book-page-stack-layer { left: 0; border-radius: 0 2px 2px 0; }
+  .book-page-stack-left .book-page-stack-layer { left: 0; border-radius: 2px 0 0 2px; }
+  .book-page-stack-right .book-page-stack-layer { right: 0; border-radius: 0 2px 2px 0; }
   .book-page-stack-layer:nth-child(1) { top: 2px; bottom: -2px; }
   .book-page-stack-layer:nth-child(2) { top: 5px; bottom: -5px; }
   .book-page-stack-layer:nth-child(3) { top: 8px; bottom: -8px; }
   .book-page-stack-layer:nth-child(4) { top: 11px; bottom: -11px; }
-  .book-page-stack-left .book-page-stack-layer:nth-child(1) { right: 2px; }
-  .book-page-stack-left .book-page-stack-layer:nth-child(2) { right: 5px; }
-  .book-page-stack-left .book-page-stack-layer:nth-child(3) { right: 8px; }
-  .book-page-stack-left .book-page-stack-layer:nth-child(4) { right: 11px; }
-  .book-page-stack-right .book-page-stack-layer:nth-child(1) { left: 2px; }
-  .book-page-stack-right .book-page-stack-layer:nth-child(2) { left: 5px; }
-  .book-page-stack-right .book-page-stack-layer:nth-child(3) { left: 8px; }
-  .book-page-stack-right .book-page-stack-layer:nth-child(4) { left: 11px; }
+  .book-page-stack-left .book-page-stack-layer:nth-child(1) { transform: translateX(-2px); }
+  .book-page-stack-left .book-page-stack-layer:nth-child(2) { transform: translateX(-5px); }
+  .book-page-stack-left .book-page-stack-layer:nth-child(3) { transform: translateX(-8px); }
+  .book-page-stack-left .book-page-stack-layer:nth-child(4) { transform: translateX(-11px); }
+  .book-page-stack-right .book-page-stack-layer:nth-child(1) { transform: translateX(2px); }
+  .book-page-stack-right .book-page-stack-layer:nth-child(2) { transform: translateX(5px); }
+  .book-page-stack-right .book-page-stack-layer:nth-child(3) { transform: translateX(8px); }
+  .book-page-stack-right .book-page-stack-layer:nth-child(4) { transform: translateX(11px); }
   .book-content-hidden .journal-page > * { opacity: 0; }
   .journal-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); height: 100%; min-height: 0; box-shadow: 0 23px 50px rgba(23, 20, 17, 0.28); }
   .journal-grid::before { content: ''; position: absolute; z-index: 5; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px); background: rgba(73, 54, 41, 0.18); box-shadow: 1px 0 rgba(255,255,255,0.8), -5px 0 12px rgba(23,20,17,0.12), 5px 0 12px rgba(23,20,17,0.08); pointer-events: none; }
