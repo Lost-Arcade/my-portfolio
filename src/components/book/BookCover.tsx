@@ -6,12 +6,22 @@ interface BookCoverProps {
   opening?: boolean;
 }
 
+const reveal = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const sequence = {
+  hidden: {},
+  visible: { transition: { delayChildren: 0.22, staggerChildren: 0.13 } },
+};
+
 export function BookCover({ onOpen, opening = false }: BookCoverProps) {
   return (
     <motion.section
       className="cover-shell relative mx-auto flex min-h-[min(760px,calc(100vh-56px))] w-full max-w-[1100px] items-center justify-center overflow-hidden rounded-[3px] px-6 py-12 shadow-book"
       initial={{ opacity: 0, scale: 0.96, y: 18 }}
-      animate={{ opacity: opening ? 0 : 1, scale: opening ? 0.98 : 1, y: opening ? 0 : 0, rotateY: opening ? -88 : 0 }}
+      animate={{ opacity: opening ? 0 : 1, scale: opening ? 0.98 : 1, y: 0, rotateY: opening ? -88 : 0 }}
       transition={{ duration: opening ? 0.52 : 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{ transformOrigin: "left center", perspective: 1200 }}
     >
@@ -19,30 +29,28 @@ export function BookCover({ onOpen, opening = false }: BookCoverProps) {
       <div className="absolute inset-8 border border-cream/10" />
       <div className="cover-corner cover-corner-tl" />
       <div className="cover-corner cover-corner-br" />
-      <div className="relative z-10 mx-auto w-full max-w-2xl text-center text-cream">
-        <p className="eyebrow tracking-[0.34em] text-cream/65">FIELD NOTES / VOL. 01</p>
-        <div className="mx-auto mt-10 flex w-fit items-center gap-3 text-cream/50">
+      <motion.div className="relative z-10 mx-auto w-full max-w-2xl text-center text-cream" variants={sequence} initial="hidden" animate={opening ? "hidden" : "visible"}>
+        <motion.p variants={reveal} className="eyebrow tracking-[0.34em] text-cream/65">FIELD NOTES / VOL. 01</motion.p>
+        <motion.div variants={reveal} className="mx-auto mt-10 flex w-fit items-center gap-3 text-cream/50">
           <Minus size={12} strokeWidth={1} />
           <span className="font-mono text-[10px] tracking-[0.4em]">ENGINEERING JOURNAL</span>
           <Plus size={12} strokeWidth={1} />
-        </div>
+        </motion.div>
         <h1 className="mt-8 font-display text-[clamp(4.5rem,12vw,9.5rem)] leading-[0.76] tracking-[-0.07em]">
-          THE
-          <br />
-          ENGINEERING
-          <br />
-          JOURNAL
+          <motion.span variants={reveal} className="block">THE</motion.span>
+          <motion.span variants={reveal} className="block">ENGINEERING</motion.span>
+          <motion.span variants={reveal} className="block">JOURNAL</motion.span>
         </h1>
-        <div className="mx-auto my-12 h-px w-24 bg-olive-light/70" />
-        <p className="font-mono text-xs uppercase tracking-[0.32em] text-cream/70">Arpit Singh</p>
-        <p className="mt-3 font-display text-2xl italic text-cream/90">Python · AI · Full Stack</p>
-        <p className="mt-8 font-mono text-[10px] tracking-[0.38em] text-cream/45">KOLKATA / 2026</p>
-        <button className="journal-button journal-button-light mx-auto mt-12" onClick={onOpen} type="button" disabled={opening}>
+        <motion.div variants={reveal} className="mx-auto my-12 h-px w-24 bg-olive-light/70" />
+        <motion.p variants={reveal} className="font-mono text-xs uppercase tracking-[0.32em] text-cream/70">Arpit Singh</motion.p>
+        <motion.p variants={reveal} className="mt-3 font-display text-2xl italic text-cream/90">Python · AI · Full Stack</motion.p>
+        <motion.p variants={reveal} className="mt-8 font-mono text-[10px] tracking-[0.38em] text-cream/45">KOLKATA / 2026</motion.p>
+        <motion.button variants={reveal} className="journal-button journal-button-light mx-auto mt-12" onClick={onOpen} type="button" disabled={opening}>
           <BookOpen size={15} />
           Open journal
           <ArrowUpRight size={15} />
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
       <div className="absolute bottom-8 left-10 font-mono text-[9px] tracking-[0.2em] text-cream/35">AS / 001</div>
       <div className="absolute bottom-8 right-10 font-mono text-[9px] tracking-[0.2em] text-cream/35">PRIVATE NOTES</div>
     </motion.section>
