@@ -4,6 +4,7 @@ import { ArrowUpRight, BookOpen, Minus, Plus } from "lucide-react";
 interface BookCoverProps {
   onOpen: () => void;
   opening?: boolean;
+  closing?: boolean;
 }
 
 const reveal = {
@@ -16,20 +17,20 @@ const sequence = {
   visible: { transition: { delayChildren: 0.22, staggerChildren: 0.13 } },
 };
 
-export function BookCover({ onOpen, opening = false }: BookCoverProps) {
+export function BookCover({ onOpen, opening = false, closing = false }: BookCoverProps) {
   return (
     <motion.section
       className="cover-shell relative mx-auto flex min-h-[min(760px,calc(100vh-56px))] w-full max-w-[1100px] items-center justify-center overflow-hidden rounded-[3px] px-6 py-12 shadow-book"
-      initial={{ opacity: 0, scale: 0.96, y: 18 }}
-      animate={{ opacity: opening ? 0 : 1, scale: opening ? 0.98 : 1, y: 0, rotateY: opening ? -88 : 0 }}
-      transition={{ duration: opening ? 0.52 : 0.7, ease: [0.22, 1, 0.36, 1] }}
+      initial={closing ? false : { opacity: 0, scale: 0.96, y: 18 }}
+      animate={closing ? { opacity: 1, scale: 1, y: 0, rotateY: 0 } : { opacity: opening ? 0 : 1, scale: opening ? 0.98 : 1, y: 0, rotateY: opening ? -88 : 0 }}
+      transition={{ duration: closing ? 0 : opening ? 0.52 : 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{ transformOrigin: "left center", perspective: 1200 }}
     >
       <div className="absolute inset-5 border border-olive-light/45" />
       <div className="absolute inset-8 border border-olive-light/20" />
       <div className="cover-corner cover-corner-tl" />
       <div className="cover-corner cover-corner-br" />
-      <motion.div className="relative z-10 mx-auto w-full max-w-[760px] px-6 text-center text-cream" variants={sequence} initial="hidden" animate={opening ? "hidden" : "visible"}>
+      <motion.div className="relative z-10 mx-auto w-full max-w-[760px] px-6 text-center text-cream" variants={sequence} initial={closing ? false : "hidden"} animate={closing ? "visible" : opening ? "hidden" : "visible"}>
         <motion.p variants={reveal} className="eyebrow tracking-[0.34em] text-cream/65">FIELD NOTES / VOL. 01</motion.p>
         <motion.div variants={reveal} className="mx-auto mt-10 flex w-fit items-center gap-3 text-cream/50">
           <Minus size={12} strokeWidth={1} />
